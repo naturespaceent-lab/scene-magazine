@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Biggest Story in K-Culture This Week | SCENE</title>
+  <meta name="description" content="The Biggest Story in K-Culture This Week">
+  <meta property="og:title" content="The Biggest Story in K-Culture This Week | SCENE">
+  <meta property="og:description" content="{{ARTICLE_DESCRIPTION}}">
+  <meta property="og:image" content="../images/article-4-32612.jpg">
+  <meta property="og:type" content="article">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'scene-bg': '#fafafa',
+            'scene-header': '#1a1a1a',
+            'scene-accent': '#E8503A',
+            'scene-text': '#222222',
+            'scene-meta': '#777777',
+          },
+          fontFamily: {
+            'headline': ['"Playfair Display"', 'Georgia', 'serif'],
+            'body': ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      background: #ffffff;
+      color: #333333;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- Navigation ---- */
+    .scene-nav {
+      background: #1a1a1a;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .scene-nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .scene-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      color: #ffffff;
+      text-decoration: none;
+    }
+    .scene-logo span { color: #E8503A; }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #cccccc;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-links a:hover { color: #ffffff; border-bottom-color: #E8503A; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* ---- Article ---- */
+    .article-header {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 0;
+    }
+    .article-category {
+      display: inline-block;
+      background: #E8503A;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      margin-bottom: 1rem;
+    }
+    .article-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.18;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+    .article-meta {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .article-meta .byline {
+      font-weight: 600;
+      color: #444;
+    }
+
+    /* Hero Image */
+    .article-hero {
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      padding: 0 1.5rem;
+    }
+    .article-hero img {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+    .article-hero .photo-credit {
+      text-align: right;
+      font-size: 0.72rem;
+      color: #999;
+      margin-top: 0.4rem;
+      font-style: italic;
+    }
+
+    /* Body */
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+    }
+    .article-body p {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+    .article-body .editorial-intro {
+      font-size: 1.2rem;
+      line-height: 1.7;
+      color: #222;
+      border-left: 4px solid #E8503A;
+      padding-left: 1.25rem;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+    .article-body .editorial-closing {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #555;
+      border-top: 1px solid #e5e5e5;
+      padding-top: 1.5rem;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+    .article-body blockquote {
+      border-left: 4px solid #E8503A;
+      margin: 2rem 0;
+      padding: 1rem 1.5rem;
+      background: #fafafa;
+      font-style: italic;
+      color: #444;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    .article-body .article-inline-image {
+      margin: 2rem -2rem;
+      text-align: center;
+    }
+    .article-body .article-inline-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    /* Source Attribution */
+    .source-attribution {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+      font-size: 0.85rem;
+      color: #999;
+    }
+    .source-attribution a {
+      color: #E8503A;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .source-attribution a:hover { text-decoration: underline; }
+    .read-original {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.82rem;
+    }
+
+    /* Related Articles */
+    .related-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+    }
+    .related-header {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: #1a1a1a;
+      padding-bottom: 0.75rem;
+      border-bottom: 3px solid #1a1a1a;
+      margin-bottom: 1.5rem;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    @media (max-width: 768px) {
+      .related-grid { grid-template-columns: 1fr; }
+    }
+    .related-card {
+      text-decoration: none;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .related-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .related-card .thumb img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .related-card .related-category {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #E8503A;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.75rem 1rem 0;
+    }
+    .related-card h3 {
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      line-height: 1.35;
+      padding: 0.35rem 1rem 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .related-card .date {
+      font-size: 0.72rem;
+      color: #999;
+      padding: 0.3rem 1rem 1rem;
+    }
+
+    /* Footer */
+    .scene-footer {
+      background: #1a1a1a;
+      color: #999;
+    }
+    .scene-footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      letter-spacing: 0.12em;
+      color: #fff;
+    }
+    .footer-logo span { color: #E8503A; }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="scene-nav">
+    <div class="scene-nav-inner">
+      <a href="../index.html" class="scene-logo">SCENE<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">HOME</a></li>
+        <li><a href="#">DRAMA</a></li>
+        <li><a href="#">FILM</a></li>
+        <li><a href="#">MUSIC</a></li>
+        <li><a href="#">CULTURE</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="article-category">BREAKING</span>
+    <h1 class="article-title">The Biggest Story in K-Culture This Week</h1>
+    <div class="article-meta">
+      <span class="byline">SCENE Staff</span>
+      <span>March 19, 2026</span>
+    </div>
+  </header>
+
+  <!-- Hero Image -->
+  <div class="article-hero">
+    <img src="../images/article-4-32612.jpg" alt="The Biggest Story in K-Culture This Week" width="760" height="428" loading="eager" referrerpolicy="no-referrer" data-fallback="https://picsum.photos/seed/The%20Biggest%20Story%20in/800/450" onerror="if(!this.dataset.failed){this.dataset.failed='1';this.src=this.dataset.fallback}">
+    <div class="photo-credit">Photo: &copy;Koreaboo</div>
+  </div>
+
+  <!-- Article Body -->
+  <article class="article-body">
+    <div class="editorial-intro">In a development that has captured the attention of the K-culture industry, BTS are once again at the center of a story that extends beyond the music. The latest news surrounding the group speaks to their growing influence across multiple facets of the entertainment landscape.</div>
+        <p>BTS's career arc has been a study in strategic evolution. Since emerging on the scene, the group has consistently expanded their artistic and commercial footprint, building a fanbase that spans continents and demographics. Their ability to adapt without losing their core identity has been central to their sustained relevance.</p>
+        <p>Tracing BTS's journey from their early days to their current standing reveals a consistent thread: a refusal to rest on past accomplishments. Each release, each tour, each public appearance has been treated as an opportunity to push further, a philosophy that has earned respect from both fans and industry veterans.</p>
+        <p>What makes BTS's story particularly compelling is the intersection of artistic ambition and commercial strategy. Every move appears calculated yet authentic, a paradox that few acts manage to sustain. The fan community's response has been overwhelmingly supportive, adding fuel to an already significant cultural moment.</p>
+        <p>BTS's trajectory has been defined by a willingness to defy convention, and this latest chapter is no different. Industry analysts note that the group's approach to career management has become something of a case study in how to maintain relevance in an increasingly competitive market.</p>
+        <p>From a broader industry perspective, BTS's latest move reflects larger shifts in how K-pop acts navigate the global entertainment landscape. The days of operating within a purely domestic framework are long gone; today's top acts must be global brands, cultural exports, and creative entities simultaneously. BTS appear to understand this better than most.</p>
+        <p>Sources close to BTS's camp describe a creative process that is more intensive than the finished product might suggest. Weeks of refinement, multiple revision cycles, and a willingness to discard material that does not meet internal standards have become hallmarks of BTS's approach. Staff and collaborators consistently point to the group's work ethic as a distinguishing characteristic.</p>
+        <p>Social media analytics tell a story of deepening engagement. BTS's content consistently outperforms benchmarks for both reach and interaction, with fan-created derivative content adding an amplification layer that money cannot buy. Platform algorithms, it appears, have learned to love BTS almost as much as their fans do.</p>
+        <p>Social media sentiment analysis reveals a response that is overwhelmingly positive, with negative engagement registering at negligible levels. For BTS's brand management team, this kind of clean positive signal is invaluable, particularly in an era where public figures are increasingly vulnerable to backlash cycles.</p>
+        <p>International fans have been particularly vocal in their response. Translation teams have ensured that language barriers do not impede the flow of information, and regional fan communities have organized watch parties, streaming events, and charitable donations in BTS's name.</p>
+        <p>Entertainment industry economists are watching BTS's trajectory with interest. The act's ability to generate revenue across multiple streams simultaneously, from music and touring to brand partnerships and content licensing, represents a model that others in the industry are eager to replicate.</p>
+        <div class="editorial-closing">The latest chapter in BTS's career is still being written. SCENE will be there for every significant development.</div>
+  </article>
+
+  <!-- Source Attribution -->
+  <div class="source-attribution">
+          Source: <a href="https://www.koreaboo.com/news/bts-gwanghwamun-concert-leaves-meaning-beyond-comeback/" target="_blank" rel="noopener noreferrer">Koreaboo</a>
+          <br><a href="https://www.koreaboo.com/news/bts-gwanghwamun-concert-leaves-meaning-beyond-comeback/" target="_blank" rel="noopener noreferrer" class="read-original">Read original article &rarr;</a>
+        </div>
+
+  <!-- Related Articles -->
+  <section class="related-section">
+    <h2 class="related-header">More From SCENE</h2>
+    <div class="related-grid">
+      
+          <a href="../articles/article-008.html" class="related-card">
+            <div class="thumb">
+              <img src="../images/article-7-32612.jpg" alt="Industry Report: What the Latest Headlines Mean for K-Pop" width="400" height="225" loading="lazy" referrerpolicy="no-referrer" data-fallback="https://picsum.photos/seed/Industry%20Report%3A%20Wha/400/225" onerror="if(!this.dataset.failed){this.dataset.failed='1';this.src=this.dataset.fallback}">
+            </div>
+            <div class="related-category">BREAKING</div>
+            <h3>Industry Report: What the Latest Headlines Mean for K-Pop</h3>
+            <span class="date">March 16, 2026</span>
+          </a>
+          <a href="../articles/article-002.html" class="related-card">
+            <div class="thumb">
+              <img src="../images/article-1-32611.jpg" alt="The Stories Behind the Headlines in K-Entertainment" width="400" height="225" loading="lazy" referrerpolicy="no-referrer" data-fallback="https://picsum.photos/seed/The%20Stories%20Behind%20t/400/225" onerror="if(!this.dataset.failed){this.dataset.failed='1';this.src=this.dataset.fallback}">
+            </div>
+            <div class="related-category">BREAKING</div>
+            <h3>The Stories Behind the Headlines in K-Entertainment</h3>
+            <span class="date">March 22, 2026</span>
+          </a>
+          <a href="../articles/article-017.html" class="related-card">
+            <div class="thumb">
+              <img src="../images/article-16-32850.jpg" alt="Industry Report: What the Latest Headlines Mean for K-Pop" width="400" height="225" loading="lazy" referrerpolicy="no-referrer" data-fallback="https://picsum.photos/seed/Industry%20Report%3A%20Wha/400/225" onerror="if(!this.dataset.failed){this.dataset.failed='1';this.src=this.dataset.fallback}">
+            </div>
+            <div class="related-category">CHARTS</div>
+            <h3>Industry Report: What the Latest Headlines Mean for K-Pop</h3>
+            <span class="date">March 10, 2026</span>
+          </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="scene-footer">
+    <div class="scene-footer-inner">
+      <div class="footer-logo">SCENE<span>.</span></div>
+      <div class="footer-copy">&copy; 2026 SCENE Magazine. All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>
