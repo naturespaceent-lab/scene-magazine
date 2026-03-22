@@ -553,6 +553,21 @@ function displayCategory(article) {
 // RSS Feed Parsing
 // ============================================================
 
+// Filter out non-K-culture content (esports, gaming, etc.)
+const BLOCKED_KEYWORDS = [
+  'esports', 'esport', 'e-sports', 'counter-strike', 'valorant', 'league of legends',
+  'overwatch', 'fortnite', 'minecraft', 'gaming', 'gamer', 'twitch streamer',
+  'cheating during', 'tournament ban', 'fps game', 'moba',
+];
+
+function isRelevantContent(title, description) {
+  const combined = `${title} ${description}`.toLowerCase();
+  for (const keyword of BLOCKED_KEYWORDS) {
+    if (combined.includes(keyword)) return false;
+  }
+  return true;
+}
+
 function parseRssFeed(xml, sourceName) {
   const items = extractItems(xml);
   const articles = [];
@@ -572,6 +587,11 @@ function parseRssFeed(xml, sourceName) {
     if (!image) image = extractImageFromContent(description);
 
     if (!title || !link) continue;
+
+    // Filter out non-K-culture content
+    if (!isRelevantContent(title, stripHtml(description || ''))) {
+      continue;
+    }
 
     articles.push({
       title,
@@ -1003,20 +1023,35 @@ function rewriteArticleBody(articleContent, title) {
   const inlineImages = (articleContent?.images || []).slice(1, 4);
 
   const paragraphs = [];
+  const usedTexts = new Set();
+  const pickUnique = (arr) => {
+    const available = arr.filter(t => !usedTexts.has(t));
+    if (available.length === 0) return arr[Math.floor(Math.random() * arr.length)];
+    const picked = available[Math.floor(Math.random() * available.length)];
+    usedTexts.add(picked);
+    return picked;
+  };
+  const shuffleAndPickUnique = (arr, n) => {
+    const available = arr.filter(t => !usedTexts.has(t));
+    const shuffled = [...available].sort(() => Math.random() - 0.5);
+    const picked = shuffled.slice(0, Math.min(n, shuffled.length));
+    for (const p of picked) usedTexts.add(p);
+    return picked;
+  };
 
   if (artist) {
     const templates = BODY_TEMPLATES[topic] || BODY_TEMPLATES.general;
     const sub = (text) => text.replace(/\{artist\}/g, artist);
 
-    paragraphs.push({ type: 'intro', text: sub(pickRandom(templates.opening)) });
+    paragraphs.push({ type: 'intro', text: sub(pickUnique(templates.opening)) });
 
     const bgCount = targetParagraphs >= 10 ? 2 : 1;
-    for (const bg of shuffleAndPick(SHARED_PARAGRAPHS.background, bgCount)) {
+    for (const bg of shuffleAndPickUnique(SHARED_PARAGRAPHS.background, bgCount)) {
       paragraphs.push({ type: 'body', text: sub(bg) });
     }
 
     const analysisCount = targetParagraphs >= 10 ? 3 : 2;
-    for (const a of shuffleAndPick(templates.analysis, analysisCount)) {
+    for (const a of shuffleAndPickUnique(templates.analysis, analysisCount)) {
       paragraphs.push({ type: 'body', text: sub(a) });
     }
 
@@ -1025,12 +1060,12 @@ function rewriteArticleBody(articleContent, title) {
     }
 
     const detailCount = targetParagraphs >= 10 ? 2 : 1;
-    for (const d of shuffleAndPick(SHARED_PARAGRAPHS.detail, detailCount)) {
+    for (const d of shuffleAndPickUnique(SHARED_PARAGRAPHS.detail, detailCount)) {
       paragraphs.push({ type: 'body', text: sub(d) });
     }
 
     const reactionCount = targetParagraphs >= 10 ? 2 : 1;
-    for (const r of shuffleAndPick(SHARED_PARAGRAPHS.reaction, reactionCount)) {
+    for (const r of shuffleAndPickUnique(SHARED_PARAGRAPHS.reaction, reactionCount)) {
       paragraphs.push({ type: 'body', text: sub(r) });
     }
 
@@ -1038,17 +1073,17 @@ function rewriteArticleBody(articleContent, title) {
       paragraphs.push({ type: 'image', src: inlineImages[1] });
     }
 
-    paragraphs.push({ type: 'body', text: sub(pickRandom(SHARED_PARAGRAPHS.impact)) });
-    paragraphs.push({ type: 'closing', text: sub(pickRandom(templates.closing)) });
+    paragraphs.push({ type: 'body', text: sub(pickUnique(SHARED_PARAGRAPHS.impact)) });
+    paragraphs.push({ type: 'closing', text: sub(pickUnique(templates.closing)) });
 
   } else {
-    paragraphs.push({ type: 'intro', text: pickRandom(NO_ARTIST_BODY.opening) });
+    paragraphs.push({ type: 'intro', text: pickUnique(NO_ARTIST_BODY.opening) });
 
-    for (const bg of shuffleAndPick(SHARED_PARAGRAPHS.noArtist.background, 2)) {
+    for (const bg of shuffleAndPickUnique(SHARED_PARAGRAPHS.noArtist.background, 2)) {
       paragraphs.push({ type: 'body', text: bg });
     }
 
-    for (const a of shuffleAndPick(NO_ARTIST_BODY.analysis, 2)) {
+    for (const a of shuffleAndPickUnique(NO_ARTIST_BODY.analysis, 2)) {
       paragraphs.push({ type: 'body', text: a });
     }
 
@@ -1056,11 +1091,11 @@ function rewriteArticleBody(articleContent, title) {
       paragraphs.push({ type: 'image', src: inlineImages[0] });
     }
 
-    for (const d of shuffleAndPick(SHARED_PARAGRAPHS.noArtist.detail, 2)) {
+    for (const d of shuffleAndPickUnique(SHARED_PARAGRAPHS.noArtist.detail, 2)) {
       paragraphs.push({ type: 'body', text: d });
     }
 
-    for (const r of shuffleAndPick(SHARED_PARAGRAPHS.noArtist.reaction, 1)) {
+    for (const r of shuffleAndPickUnique(SHARED_PARAGRAPHS.noArtist.reaction, 1)) {
       paragraphs.push({ type: 'body', text: r });
     }
 
@@ -1068,8 +1103,8 @@ function rewriteArticleBody(articleContent, title) {
       paragraphs.push({ type: 'image', src: inlineImages[1] });
     }
 
-    paragraphs.push({ type: 'body', text: pickRandom(SHARED_PARAGRAPHS.noArtist.impact) });
-    paragraphs.push({ type: 'closing', text: pickRandom(NO_ARTIST_BODY.closing) });
+    paragraphs.push({ type: 'body', text: pickUnique(SHARED_PARAGRAPHS.noArtist.impact) });
+    paragraphs.push({ type: 'closing', text: pickUnique(NO_ARTIST_BODY.closing) });
   }
 
   return { paragraphs };
@@ -1167,10 +1202,27 @@ function generateTopStoryCard(article) {
         </a>`;
 }
 
+const DRAMA_FALLBACK_EXCERPTS = [
+  'An in-depth look at the latest developments in K-drama and entertainment culture.',
+  'The stories and performances capturing audiences across the K-entertainment world.',
+  'From script to screen: exploring the creative forces behind this week\'s biggest K-culture moments.',
+  'Coverage of the dramas, films, and performances making headlines in Korean entertainment.',
+];
+let dramaExcerptIdx = 0;
+
 function generateDramaCard(article) {
   if (!article) return '';
   const cat = displayCategory(article);
-  const excerpt = article.articleContent?.paragraphs?.[0]?.slice(0, 120) || 'An in-depth look at the latest developments in K-drama and entertainment culture...';
+  let rawExcerpt = article.articleContent?.paragraphs?.[0]?.slice(0, 120);
+  // Filter out leaked non-K-culture excerpts
+  if (rawExcerpt && BLOCKED_KEYWORDS.some(kw => rawExcerpt.toLowerCase().includes(kw))) {
+    rawExcerpt = null;
+  }
+  const excerpt = rawExcerpt || (() => {
+    const text = DRAMA_FALLBACK_EXCERPTS[dramaExcerptIdx % DRAMA_FALLBACK_EXCERPTS.length];
+    dramaExcerptIdx++;
+    return text;
+  })();
   return `<a href="${escapeHtml(article.localUrl)}" class="drama-card">
           ${imgTag(article, 200, 140)}
           <div class="body">
@@ -1182,10 +1234,28 @@ function generateDramaCard(article) {
         </a>`;
 }
 
+const INDUSTRY_FALLBACK_EXCERPTS = [
+  'A closer look at the business moves and market forces shaping the K-entertainment industry this week.',
+  'Examining how shifting industry dynamics are creating new opportunities and challenges across K-culture.',
+  'Key developments from behind the scenes in the K-entertainment world, analyzed by SCENE.',
+  'Breaking down the strategic decisions and partnerships driving change in the global K-pop market.',
+  'The latest power plays, deal-making, and market shifts in the world of Korean entertainment.',
+  'An executive-level overview of the trends reshaping how K-culture reaches global audiences.',
+];
+let industryExcerptIdx = 0;
+
 function generateIndustryItem(article) {
   if (!article) return '';
   const cat = displayCategory(article);
-  const excerpt = article.articleContent?.paragraphs?.[0]?.slice(0, 100) || 'Industry developments and business analysis from across the K-entertainment sector...';
+  let excerpt = article.articleContent?.paragraphs?.[0]?.slice(0, 100);
+  // Filter out leaked non-K-culture excerpts
+  if (excerpt && BLOCKED_KEYWORDS.some(kw => excerpt.toLowerCase().includes(kw))) {
+    excerpt = null;
+  }
+  if (!excerpt) {
+    excerpt = INDUSTRY_FALLBACK_EXCERPTS[industryExcerptIdx % INDUSTRY_FALLBACK_EXCERPTS.length];
+    industryExcerptIdx++;
+  }
   return `<a href="${escapeHtml(article.localUrl)}" class="industry-item">
           <div class="cat">${escapeHtml(cat)}</div>
           <h3>${escapeHtml(article.title)}</h3>
@@ -1285,7 +1355,7 @@ async function generateArticlePages(allArticles, usedArticles) {
 
     let html = articleTemplate
       .replace(/\{\{ARTICLE_TITLE\}\}/g, escapeHtml(article.title))
-      .replace('{{ARTICLE_DESCRIPTION}}', escapeHtml(article.title).slice(0, 160))
+      .replace(/\{\{ARTICLE_DESCRIPTION\}\}/g, escapeHtml(article.title).slice(0, 160))
       .replace('{{ARTICLE_IMAGE}}', escapeHtml(heroImgSrc))
       .replace('{{ARTICLE_CATEGORY}}', escapeHtml(displayCategory(article)))
       .replace('{{ARTICLE_DATE}}', escapeHtml(article.formattedDate))
@@ -1414,16 +1484,31 @@ async function main() {
   await fillMissingImages(articles);
   log('');
 
-  // 3. Rewrite titles to Variety/Deadline English style
+  // 3. Rewrite titles to Variety/Deadline English style (with deduplication)
   log('Rewriting titles to Variety/Deadline editorial English...');
   let rewritten = 0;
+  const usedTitles = new Set();
+  let dedupCounter = 0;
   for (const article of articles) {
     const original = article.title;
     article.originalTitle = original;
-    article.title = rewriteTitle(original);
+    // Try up to 15 times to get a unique title
+    let newTitle = rewriteTitle(original);
+    let attempts = 0;
+    while (usedTitles.has(newTitle) && attempts < 15) {
+      newTitle = rewriteTitle(original);
+      attempts++;
+    }
+    // If still duplicate after 15 tries, append a unique counter suffix
+    if (usedTitles.has(newTitle)) {
+      dedupCounter++;
+      newTitle = `${newTitle} — ${article.source} Edition #${dedupCounter}`;
+    }
+    usedTitles.add(newTitle);
+    article.title = newTitle;
     if (article.title !== original) rewritten++;
   }
-  log(`  Rewritten ${rewritten}/${articles.length} titles`);
+  log(`  Rewritten ${rewritten}/${articles.length} titles (all unique)`);
   log('');
 
   // 4. Backdate articles from Jan 1 to Mar 22, 2026
