@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Training Room to Stage: The Tech Revolution Behind K-Pop's Attendance System | SCENE</title>
+  <meta name="description" content="An inside look at how AI attendance tracking is reshaping the trainee-to-idol journey in Korea's K-Pop academies.">
+  <meta property="og:title" content="From Training Room to Stage: The Tech Revolution Behind K-Pop's Attendance System | SCENE">
+  <meta property="og:description" content="An inside look at how AI attendance tracking is reshaping the trainee-to-idol journey in Korea's K-Pop academies.">
+  <meta property="og:image" content="https://picsum.photos/seed/scene-trainee-stage/1200/675">
+  <meta property="og:type" content="article">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'scene-bg': '#fafafa',
+            'scene-header': '#1a1a1a',
+            'scene-accent': '#E8503A',
+            'scene-text': '#222222',
+            'scene-meta': '#777777',
+          },
+          fontFamily: {
+            'headline': ['"Playfair Display"', 'Georgia', 'serif'],
+            'body': ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      background: #ffffff;
+      color: #333333;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- Navigation ---- */
+    .scene-nav {
+      background: #1a1a1a;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .scene-nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .scene-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      color: #ffffff;
+      text-decoration: none;
+    }
+    .scene-logo span { color: #E8503A; }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #cccccc;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-links a:hover { color: #ffffff; border-bottom-color: #E8503A; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* ---- Article ---- */
+    .article-header {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 0;
+    }
+    .article-category {
+      display: inline-block;
+      background: #E8503A;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      margin-bottom: 1rem;
+    }
+    .article-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.18;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+    .article-meta {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .article-meta .byline {
+      font-weight: 600;
+      color: #444;
+    }
+
+    /* Hero Image */
+    .article-hero {
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      padding: 0 1.5rem;
+    }
+    .article-hero img {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+    .article-hero .photo-credit {
+      text-align: right;
+      font-size: 0.72rem;
+      color: #999;
+      margin-top: 0.4rem;
+      font-style: italic;
+    }
+
+    /* Body */
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+    }
+    .article-body p {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+    .article-body .editorial-intro {
+      font-size: 1.2rem;
+      line-height: 1.7;
+      color: #222;
+      border-left: 4px solid #E8503A;
+      padding-left: 1.25rem;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+    .article-body .editorial-closing {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #555;
+      border-top: 1px solid #e5e5e5;
+      padding-top: 1.5rem;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+    .article-body blockquote {
+      border-left: 4px solid #E8503A;
+      margin: 2rem 0;
+      padding: 1rem 1.5rem;
+      background: #fafafa;
+      font-style: italic;
+      color: #444;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    .article-body .article-inline-image {
+      margin: 2rem -2rem;
+      text-align: center;
+    }
+    .article-body .article-inline-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    /* Source Attribution */
+    .source-attribution {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+      font-size: 0.85rem;
+      color: #999;
+    }
+    .source-attribution a {
+      color: #E8503A;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .source-attribution a:hover { text-decoration: underline; }
+    .read-original {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.82rem;
+    }
+
+    /* Related Articles */
+    .related-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+    }
+    .related-header {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: #1a1a1a;
+      padding-bottom: 0.75rem;
+      border-bottom: 3px solid #1a1a1a;
+      margin-bottom: 1.5rem;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    @media (max-width: 768px) {
+      .related-grid { grid-template-columns: 1fr; }
+    }
+    .related-card {
+      text-decoration: none;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .related-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .related-card .thumb img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .related-card .related-category {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #E8503A;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.75rem 1rem 0;
+    }
+    .related-card h3 {
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      line-height: 1.35;
+      padding: 0.35rem 1rem 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .related-card .date {
+      font-size: 0.72rem;
+      color: #999;
+      padding: 0.3rem 1rem 1rem;
+    }
+
+    /* Footer */
+    .scene-footer {
+      background: #1a1a1a;
+      color: #999;
+    }
+    .scene-footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      letter-spacing: 0.12em;
+      color: #fff;
+    }
+    .footer-logo span { color: #E8503A; }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="scene-nav">
+    <div class="scene-nav-inner">
+      <a href="../index.html" class="scene-logo">SCENE<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">HOME</a></li>
+        <li><a href="#">DRAMA</a></li>
+        <li><a href="#">FILM</a></li>
+        <li><a href="#">MUSIC</a></li>
+        <li><a href="#">CULTURE</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="article-category">FEATURE</span>
+    <h1 class="article-title">From Training Room to Stage: The Tech Revolution Behind K-Pop's Attendance System</h1>
+    <div class="article-meta">
+      <span class="byline">SCENE Staff</span>
+      <span>April 1, 2026</span>
+    </div>
+  </header>
+
+  <!-- Hero Image -->
+  <div class="article-hero">
+    <img src="https://picsum.photos/seed/scene-trainee-stage/1200/675" alt="K-Pop Training Revolution" width="1200" height="675" loading="eager" referrerpolicy="no-referrer">
+    <div class="photo-credit">Image &mdash; SCENE Editorial</div>
+  </div>
+
+  <!-- Article Body -->
+  <article class="article-body">
+    <div class="editorial-intro">
+      It is 6:14 a.m. in Gangnam, and seventeen-year-old Jiwoo has already swiped into the building. Somewhere in a server rack humming behind concrete walls, her arrival timestamp has been logged, compared against the lesson start time, and filed into a column called <em>late_minutes</em>. The value reads zero. Today, at least, the system has nothing to hold against her.
+    </div>
+
+    <p>
+      Jiwoo is one of hundreds of trainees across Seoul whose daily routines are now shaped by an AI attendance management system that treats every minute as data. The technology, built on a relational database architecture that connects <strong>lessons</strong>, <strong>attendance</strong>, and <strong>students</strong> tables, has quietly become the backbone of how K-Pop academies track, evaluate, and ultimately decide who gets closer to debut. For trainees like Jiwoo, the system is invisible yet omnipresent&mdash;a silent observer that never blinks, never forgets, and never grants extensions.
+    </p>
+
+    <p>
+      Her morning begins with a vocal lesson scheduled under Group A, the academy's designation for its top-performing cohort. The <strong>lessons</strong> table stores every detail: the instructor assigned, the time window, the group classification. Group A and Group B are not just administrative labels; they are social currencies. Being placed in Group A means you train alongside the best, you receive more attention from choreographers, and you are first in line when agencies come scouting. Being moved to Group B feels, according to several trainees SCENE spoke with, like "being told to try harder while everyone watches you fall behind."
+    </p>
+
+    <blockquote>
+      "You can feel it in the room when someone gets reassigned. Nobody says anything. The system just updates, and the next week, they are in a different time slot. That is how you know."
+    </blockquote>
+
+    <p>
+      The attendance system tracks four statuses for every lesson: <em>present</em>, <em>absent</em>, <em>late</em>, and <em>excused</em>. Each carries different weight. A "present" is the baseline&mdash;expected, unremarkable, the absence of drama. An "excused" status requires documentation and instructor approval, functioning as a safety valve for genuine emergencies. But it is the space between "late" and "absent" where careers quietly pivot. The <strong>late_minutes</strong> field captures exact tardiness&mdash;not rounded, not estimated. A trainee arriving seven minutes after class begins sees that number etched permanently into their record. Over a month, these minutes accumulate into a narrative that the AI reads with mathematical clarity.
+    </p>
+
+    <p>
+      What makes the stakes tangible is the concept of session consumption. Every attendance event tagged as <strong>is_session_consumed = TRUE</strong> deducts from a trainee's monthly allocation. This allocation is determined by their plan tier&mdash;a field in the <strong>students</strong> table that classifies enrollees into four levels: <em>start</em>, <em>basic</em>, <em>standard</em>, and <em>premium</em>. A start-tier trainee might receive just four sessions per month. Premium trainees get twenty or more. The math is simple but its implications are profound: if you are on a start plan and you miss two sessions, you have lost half your monthly training. There are no rollovers. There are no refunds. The counter resets, and the lost sessions become ghosts&mdash;opportunities that existed in the database schema but never materialized into practice time.
+    </p>
+
+    <p>
+      Jiwoo is on a standard plan. Twelve sessions a month. She has learned to treat each one like a performance. "I used to think practice was where you could make mistakes," she told SCENE during a break between classes. "Now I think of it as twelve chances. If I waste one, I am not just behind on choreo&mdash;I am behind on data." Her language reveals how deeply the system has embedded itself into trainee psychology. They do not talk about missing class; they talk about consuming sessions. They do not worry about being scolded by instructors; they worry about triggering warnings.
+    </p>
+
+    <p>
+      The <strong>warning_issued</strong> flag is the system's mechanism for escalation. When the AI detects a pattern of concerning behavior&mdash;multiple late arrivals in a rolling window, consecutive unexcused absences&mdash;it sets the boolean to TRUE. Warnings accumulate. They feed into the algorithms that recommend group reassignment, and they surface in quarterly reviews where academy management decides which trainees advance, which remain, and which are quietly let go. Unlike a human instructor who might soften a reprimand or grant an unspoken second chance, the warning system operates without sentiment. It does not know that a trainee was late because they were comforting a friend. It knows only that they arrived four minutes after the lesson began.
+    </p>
+
+    <p>
+      The competitive dynamics between Group A and Group B create a narrative arc that could itself be the plot of a K-drama. The same instructor often teaches both groups on the same day, using identical material. The only variable is the trainees themselves&mdash;and their attendance records. Data from the system shows that Group A trainees actively pursue makeup sessions to recover consumed slots, attending at more than twice the rate of their Group B counterparts. It is a self-reinforcing cycle: the most committed trainees maintain the best attendance, receive the most training, and grow fastest&mdash;widening the gap between the two groups with every passing week.
+    </p>
+
+    <p>
+      As Jiwoo packs her bag after her third session of the week, she checks a notification on her phone. Nine sessions remaining this month. No warnings. Group A status confirmed for next quarter. She allows herself a small smile&mdash;the kind that does not show up in any database column but means everything to a seventeen-year-old who woke up before dawn to chase a dream measured in minutes and booleans.
+    </p>
+
+    <div class="editorial-closing">
+      The journey from training room to stage has always been grueling. What has changed is not the difficulty but the documentation. Every step, every stumble, every six-a.m. arrival is now recorded, analyzed, and stored. For a generation of trainees growing up inside this system, discipline is no longer an abstract virtue preached by seniors&mdash;it is a quantifiable metric, visible in their attendance records, inescapable in its precision. The spotlight they dream of begins, it turns out, with a timestamp.
+    </div>
+  </article>
+
+  <!-- Source Attribution -->
+
+  <!-- Related Articles -->
+  <section class="related-section">
+    <h2 class="related-header">More From SCENE</h2>
+    <div class="related-grid">
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="scene-footer">
+    <div class="scene-footer-inner">
+      <div class="footer-logo">SCENE<span>.</span></div>
+      <div class="footer-copy">&copy; 2026 SCENE Magazine. All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>
